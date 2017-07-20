@@ -5400,7 +5400,26 @@ class CloudPrinting(LogoCert):
       prompt += 'If the margins are not correct, fail this test.'
       self.waitAndManualPass(test_id, test_name, output,
                              verification_prompt=prompt)
+      
+    def test_49_CloudPrintMediaSizeSelectLegal(self):
+      """Verify cloud printing with media size option."""
+      #test_id = 'c8de872f-49bd-45b7-9623-8db0861aed35'
+      test_name = 'GCP.PageSizeLegal'
+      _logger.info('Testing the selection of Legal media size.')
+      PromptAndWaitForUserAction('Load printer with Legal size paper. '
+                                'Select return when ready.')
 
+      self.cjt.AddSizeOption(GCPConstants.LEGAL_HEIGHT, GCPConstants.LEGAL_WIDTH)
+      output = self.submit(_device.dev_id, Constants.IMAGES['PNG1'], test_id,
+                          test_name, self.cjt)
+      try:
+        self.assertTrue(output['success'])
+      except AssertionError:
+        notes = 'Error selecting Legal media size.'
+        self.LogTest(test_id, test_name, 'Failed', notes)
+        raise
+      else:
+        self.waitAndManualPass(test_id, test_name, output)
 
 if __name__ == '__main__':
   runner = unittest.TextTestRunner(verbosity=2)

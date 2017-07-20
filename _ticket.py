@@ -178,6 +178,10 @@ class GCPConstants(object):
   A4_HEIGHT = 297000
   A4_WIDTH = 210000
 
+  # Legal Paper size in microns
+  LEGAL_HEIGHT = 356000
+  LEGAL_WIDTH = 216000
+  
   #
   # CJS (Cloud Job State) constants
   #
